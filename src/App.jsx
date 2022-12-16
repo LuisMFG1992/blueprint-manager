@@ -1,7 +1,9 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Home from "./Components/Home/Home";
 
 function App() {
-  return <h1>Hello</h1>;
+  return <Home />;
 }
 
 export default App;
