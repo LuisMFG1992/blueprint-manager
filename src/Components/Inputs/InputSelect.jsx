@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-const Inputs = ({
+const InputSelect = ({
   label,
   name,
   inputValueHandler,
@@ -21,4 +21,4 @@ const Inputs = ({
   );
 };
 
-export default Inputs;
+export default InputSelect;

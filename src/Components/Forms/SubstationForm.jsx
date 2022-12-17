@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Inputs from "../Inputs/Inputs";
+import InputSelect from "../Inputs/InputSelect";
 
 const dataBase = [
   { id: "041", substation: "041 -  Libertador", sections: [1, 2], acoples: 1 },
@@ -324,7 +324,7 @@ function SubstationForm() {
   return (
     <Form onSubmit={submitHandler}>
       <Group className="mb-3" controlId="formBasicEmail">
-        <Inputs
+        <InputSelect
           label="Substatión"
           name="substation"
           inputValueHandler={inputValueHandler}
@@ -334,7 +334,7 @@ function SubstationForm() {
       </Group>
 
       <Group className="mb-3" controlId="formBasicEmail">
-        <Inputs
+        <InputSelect
           label="Sección"
           name="section"
           inputValueHandler={inputValueHandler}
@@ -344,7 +344,7 @@ function SubstationForm() {
       </Group>
 
       <Group className="mb-3" controlId="formBasicEmail">
-        <Inputs
+        <InputSelect
           label="Equipo"
           name="equipment"
           inputValueHandler={inputValueHandler}
