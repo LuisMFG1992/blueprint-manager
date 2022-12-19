@@ -1,10 +1,10 @@
 import React from "react";
-import { Form } from "react-bootstrap";
+import { uploadFiles } from "../../FireStore/config";
 
-const InputSelect = ({
+const Inputs = ({
   label,
   name,
-  inputValueHandler = () => {},
+  inputValueHandler,
   placeholder,
   dinamicOptions,
 }) => {
@@ -21,4 +21,4 @@ const InputSelect = ({
   );
 };
 
-export default InputSelect;
+export default Inputs;

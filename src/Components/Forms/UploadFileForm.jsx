@@ -5,12 +5,32 @@ import { uploadFiles } from "../../FireStore/config";
 const UploadFileForm = () => {
   const { Group } = Form;
 
-  const [file, setFile] = useState(null);
+  const [formValues, setFormValues] = useState({
+    substation: "",
+    section: "",
+    equipment: "",
+  });
+
+  const isAnyInputNotSelected = () => {
+    let anyInputNotSelected = true;
+
+    if (
+      formValues.substation !== "" &&
+      formValues.section !== "" &&
+      formValues.equipment !== ""
+    ) {
+      anyInputNotSelected = false;
+    }
+    return anyInputNotSelected;
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    uploadFiles(file);
+    console.log(formValues);
+    console.log(file);
   };
+
+  const [file, setFile] = useState(null);
 
   return (
     <Form onSubmit={submitHandler}>
