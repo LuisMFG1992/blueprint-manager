@@ -39,7 +39,7 @@ function SubstationForm() {
   const substationOptions = dataBase.map((element) => {
     return (
       <option key={element.id} value={element.id}>
-        {element.substation}
+        {element.id} - {element.substation}
       </option>
     );
   });
