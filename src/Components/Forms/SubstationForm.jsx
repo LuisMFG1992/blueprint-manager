@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { dataBase, equipments } from "../../../utils";
 import InputSelect from "../Inputs/InputSelect";
+import { downLoadFirebaseStorage } from "../../../utils";
 
 const { Group } = Form;
 
@@ -20,7 +21,10 @@ function SubstationForm() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(formValues);
+
+    downLoadFirebaseStorage(
+      `${formValues.substation}/${formValues.section}/${formValues.substation}_${formValues.section}_${formValues.equipment}.pdf`
+    );
   };
 
   const isAnyInputNotSelected = () => {
@@ -46,7 +50,13 @@ function SubstationForm() {
 
   const equipmentOptions =
     formValues.section &&
-    equipments.map((element) => <option key={element}>{element}</option>);
+    equipments.map((element) => {
+      return (
+        <option key={element.value} value={element.value}>
+          {element.name}
+        </option>
+      );
+    });
 
   const sectionOptions =
     formValues.substation &&

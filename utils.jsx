@@ -1,3 +1,6 @@
+import { ref, getDownloadURL } from "firebase/storage";
+import { db } from "./src/FireStore/config";
+
 export const dataBase = [
   { id: "041", substation: "Libertador", sections: [1, 2], acoples: 1 },
   { id: "044", substation: "P. Nuevo", sections: [1, 2], acoples: 1 },
@@ -261,14 +264,20 @@ export const dataBase = [
 ];
 
 export const equipments = [
-  "Transformador",
-  "Interruptor",
-  "Acople",
-  "Medición",
-  "Servicio Int.",
+  { name: "Transformador", value: "transformador" },
+  { name: "Interruptor", value: "interruptor" },
+  { name: "Banco Capacitor", value: "banco-capacitor" },
+  { name: "Medición", value: "medicion" },
+  { name: "Servicio Interno", value: "servicio-int" },
 ];
 
-export const newDataBase = [
-  { id: "041", substation: "Libertador", sections: [1, 2], acoples: 1 },
-  { id: "044", substation: "P. Nuevo", sections: [1, 2], acoples: 1 },
-];
+export const downLoadFirebaseStorage = (fileName) => {
+  getDownloadURL(ref(db, fileName))
+    .then((url) => {
+      console.log(url);
+      return url;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

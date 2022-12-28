@@ -1,9 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getStorage, ref } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,14 +14,13 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const storage = getStorage();
-const pathReference = ref(storage, "images/stars.jpg");
+export const db = getStorage();
 
-export const uploadFiles = (file) => {
-  const storageRef = ref(storage, file.name);
+// export const uploadFiles = (file) => {
+//   const storageRef = ref(storage, file.name);
 
-  // 'file' comes from the Blob or File API
-  uploadBytes(storageRef, file).then((snapshot) => {
-    console.log(snapshot);
-  });
-};
+//   // 'file' comes from the Blob or File API
+//   uploadBytes(storageRef, file).then((snapshot) => {
+//     console.log(snapshot);
+//   });
+// };

@@ -8,7 +8,7 @@ const Header = () => {
         className="w-100 pb-1 roundedTop maxImageHight"
         src="../../../assets/edenor.png"
       />
-      <h2 className="text-center pt-2">Planos SEAT MT</h2>
+      <p className=" h1 text-center pt-2 ">Planos SEAT MT</p>
     </>
   );
 };
