@@ -1,0 +1,283 @@
+import { ref, getDownloadURL } from "firebase/storage";
+import { db } from "./src/FireStore/config";
+
+export const dataBase = [
+  { id: "041", substation: "Libertador", sections: [1, 2], acoples: 1 },
+  { id: "044", substation: "P. Nuevo", sections: [1, 2], acoples: 1 },
+  {
+    id: "046",
+    substation: "Colegiales",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "047",
+    substation: "Agronomía",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "050", substation: "V. López", sections: [1, 2], acoples: 1 },
+  {
+    id: "051",
+    substation: "Matheu",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "052",
+    substation: "Aniversario",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "053",
+    substation: "Victoria",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "054",
+    substation: "Migueletes",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "055", substation: "Munro", sections: [1, 2, 3, 4], acoples: 2 },
+  { id: "056", substation: "Boulogne", sections: [1, 2], acoples: 1 },
+  {
+    id: "057",
+    substation: "Edison",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "058",
+    substation: "Talar",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "059",
+    substation: "Benavídez",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "061",
+    substation: "Castelar",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "062", substation: "Merlo", sections: [1, 2, 3, 4], acoples: 2 },
+  {
+    id: "063",
+    substation: "Casanova",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "064",
+    substation: "Luzuriaga",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "065", substation: "Matanza", sections: [1, 2], acoples: 1 },
+  {
+    id: "066",
+    substation: "R. Mejía",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "067",
+    substation: "Morón",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "068",
+    substation: "Malaver",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "069", substation: "Caseros", sections: [1, 2], acoples: 1 },
+  { id: "110", substation: "Coghlan", sections: [1, 2], acoples: 1 },
+  {
+    id: "111",
+    substation: "Güemes",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "114", substation: "Vidal", sections: [1, 2, 3, 4], acoples: 2 },
+  { id: "129", substation: "Aguas", sections: [1, 2, 3], acoples: 1 },
+  {
+    id: "133",
+    substation: "Austria",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "136",
+    substation: "Urquiza",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "137",
+    substation: "Saavedra",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "151", substation: "Ford", sections: [1, 2, 3, 4], acoples: 2 },
+  { id: "152", substation: "San Isidro", sections: [1, 2], acoples: 1 },
+  { id: "153", substation: "Tigre", sections: [1, 2], acoples: 1 },
+  {
+    id: "154",
+    substation: "Maschwitz",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "155", substation: "V. Adelina", sections: [1, 2], acoples: 1 },
+  { id: "156", substation: "Nordelta", sections: [1, 2], acoples: 1 },
+  { id: "157", substation: "Bancalari", sections: [1, 2], acoples: 1 },
+  { id: "158", substation: "Pilar", sections: [1, 2], acoples: 1 },
+  {
+    id: "159",
+    substation: "Nogués",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "160", substation: "Rodríguez", sections: [], acoples: 0 },
+  { id: "161", substation: "Sevel", sections: [], acoples: 0 },
+  {
+    id: "162",
+    substation: "Tapiales",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "163", substation: "La Reja", sections: [1, 2], acoples: 1 },
+  {
+    id: "164",
+    substation: "S. Justo",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "165", substation: "San Miguel", sections: [1, 2], acoples: 1 },
+  { id: "166", substation: "Hurlingham", sections: [1, 2], acoples: 1 },
+  {
+    id: "167",
+    substation: "Ciudadela",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "168",
+    substation: "G. Catán",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "169",
+    substation: "Malvinas",
+    sections: [1, 2, 3, 4, 5, 6, 7],
+    acoples: 4,
+  },
+  { id: "221", substation: "N. Puerto", sections: [], acoples: 0 },
+  { id: "235", substation: "Newbery", sections: [1, 2], acoples: 1 },
+  { id: "237", substation: "Melo", sections: [1, 2, 3, 4], acoples: 2 },
+  { id: "250", substation: "M. Benz", sections: [1, 2], acoples: 1 },
+  { id: "251", substation: "Del Viso", sections: [1, 2], acoples: 1 },
+  {
+    id: "252",
+    substation: "Tortuguitas",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "253", substation: "El Cazador", sections: [1, 2], acoples: 1 },
+  {
+    id: "254",
+    substation: "J. C. Paz",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "255", substation: "Corralon", sections: [1, 2], acoples: 1 },
+  {
+    id: "256",
+    substation: "Catonas",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "257", substation: "Manzone", sections: [1, 2], acoples: 1 },
+  {
+    id: "258",
+    substation: "P. del Rey",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  {
+    id: "260",
+    substation: "Derqui",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "261", substation: "Pontevedra", sections: [1, 2], acoples: 1 },
+  {
+    id: "262",
+    substation: "Rotonda",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "264", substation: "Ituzaingó", sections: [1, 2], acoples: 1 },
+  { id: "265", substation: "Muñíz", sections: [1, 2], acoples: 1 },
+  {
+    id: "266",
+    substation: "Suárez",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "268", substation: "Sta. Rosa", sections: [], acoples: 0 },
+  { id: "269", substation: "Las Heras", sections: [1, 2], acoples: 1 },
+  { id: "272", substation: "Altos", sections: [1, 2], acoples: 1 },
+  { id: "351", substation: "S. Fernando", sections: [1, 2], acoples: 1 },
+  { id: "352", substation: "Tecnópolis", sections: [1, 2], acoples: 1 },
+  {
+    id: "353",
+    substation: "El Pino",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "357", substation: "Parque", sections: [1, 2], acoples: 1 },
+  {
+    id: "363",
+    substation: "M. Paz",
+    sections: [1, 2, 3, 4],
+    acoples: 2,
+  },
+  { id: "365", substation: "Pantanosa", sections: [1, 2], acoples: 1 },
+  { id: "366", substation: "S. Alberto", sections: [1, 2], acoples: 1 },
+  { id: "369", substation: "Zappalorto", sections: [], acoples: 0 },
+  {
+    id: "CD04",
+    substation: "Escobar",
+    sections: [1, 2, 3],
+    acoples: 1,
+  },
+];
+
+export const equipments = [
+  { name: "Transformador", value: "transformador" },
+  { name: "Interruptor", value: "interruptor" },
+  { name: "Banco Capacitor", value: "banco-capacitor" },
+  { name: "Medición", value: "medicion" },
+  { name: "Servicio Interno", value: "servicio-int" },
+];
+
+export const downLoadFirebaseStorage = (fileName) => {
+  getDownloadURL(ref(db, fileName))
+    .then((url) => {
+      console.log(url);
+      return url;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

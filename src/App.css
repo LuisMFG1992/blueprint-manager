@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.appContainer {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    35deg,
+    rgba(2, 104, 125, 1) 13%,
+    rgba(42, 151, 6, 1) 86%
+  );
+}
+
+.roundedTwoRem {
+  border-radius: 2rem;
+}
+
+.roundedTop {
+  border-radius: 2rem 2rem 0 0;
+}
+
+.maxWidthForMobile {
+  max-width: 25rem;
+}

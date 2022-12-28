@@ -1,71 +1,114 @@
 import { useState } from "react";
-import { FormControl } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { dataBase, equipments } from "../../../utils";
+import InputSelect from "../Inputs/InputSelect";
+import { downLoadFirebaseStorage } from "../../../utils";
 
-const { Check, Text, Control, Label, Group, Select } = Form;
+const { Group } = Form;
 
 function SubstationForm() {
-  const [substationInputValue, setSubstationInputValue] =
-    useState("Subestación");
-  const [sectionInputValue, setSectionInputValue] = useState("Sección");
+  const [formValues, setFormValues] = useState({
+    substation: "",
+    section: "",
+    equipment: "",
+  });
 
-  const [equipmentInputValue, setEquipmentInputValue] = useState("Equipo");
-
-  const SelectedValues = {
-    substation: substationInputValue,
-    section: sectionInputValue,
-    equipment: equipmentInputValue,
-  };
-
-  const substationInputHandler = (e) => {
-    setSubstationInputValue(e.target.value);
-  };
-
-  const sectionInputHandler = (e) => {
-    setSectionInputValue(e.target.value);
-  };
-
-  const equipmentInputHandler = (e) => {
-    setEquipmentInputValue(e.target.value);
+  const inputValueHandler = (e) => {
+    const { name, value } = e.target;
+    setFormValues((prev) => ({ ...prev, [name]: value }));
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(SelectedValues);
+
+    downLoadFirebaseStorage(
+      `${formValues.substation}/${formValues.section}/${formValues.substation}_${formValues.section}_${formValues.equipment}.pdf`
+    );
   };
+
+  const isAnyInputNotSelected = () => {
+    let anyInputNotSelected = true;
+
+    if (
+      formValues.substation !== "" &&
+      formValues.section !== "" &&
+      formValues.equipment !== ""
+    ) {
+      anyInputNotSelected = false;
+    }
+    return anyInputNotSelected;
+  };
+
+  const substationOptions = dataBase.map((element) => {
+    return (
+      <option key={element.id} value={element.id}>
+        {element.id} - {element.substation}
+      </option>
+    );
+  });
+
+  const equipmentOptions =
+    formValues.section &&
+    equipments.map((element) => {
+      return (
+        <option key={element.value} value={element.value}>
+          {element.name}
+        </option>
+      );
+    });
+
+  const sectionOptions =
+    formValues.substation &&
+    dataBase
+      .find((element) => element.id === formValues.substation)
+      .sections.map((element) => (
+        <option key={element} value={element}>
+          Secc. {element}
+        </option>
+      ));
 
   return (
     <Form onSubmit={submitHandler}>
-      <Group className="mb-3" controlId="formBasicEmail">
-        <Label>Substatión </Label>
-        <Select value={substationInputValue} onChange={substationInputHandler}>
-          <option value={"colegiales"}>Colegiales</option>
-          <option value={"coghlan"}>Coghlan</option>
-        </Select>
+      <Group className="mb-3">
+        <InputSelect
+          label="Substatión"
+          name="substation"
+          inputValueHandler={inputValueHandler}
+          placeholder="Elige una subestación"
+          dinamicOptions={substationOptions}
+        />
       </Group>
-      <Group className="mb-3" controlId="formBasicEmail">
-        <Label>Sección </Label>
-        <Select value={sectionInputValue} onChange={sectionInputHandler}>
-          <option value={"1"}>Secc. 1</option>
-          <option value={"2"}>Secc. 2</option>
-          <option value={"3"}>Secc. 3</option>
-          <option value={"4"}>Secc. 4</option>
-        </Select>
+
+      <Group className="mb-3">
+        <InputSelect
+          label="Sección"
+          name="section"
+          inputValueHandler={inputValueHandler}
+          placeholder="Elige una subestación"
+          dinamicOptions={sectionOptions}
+        />
       </Group>
-      <Group className="mb-3" controlId="formBasicEmail">
-        <Label>Equipo </Label>
-        <Select value={equipmentInputValue} onChange={equipmentInputHandler}>
-          <option value={"transformador"}>Transformador</option>
-          <option value={"interruptor"}>Interruptor</option>
-          <option value={"acople"}>Acople</option>
-          <option value={"medicion"}>Medición</option>
-        </Select>
+
+      <Group className="mb-3">
+        <InputSelect
+          label="Equipo"
+          name="equipment"
+          inputValueHandler={inputValueHandler}
+          placeholder="Elige un equipo"
+          dinamicOptions={equipmentOptions}
+        />
       </Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-      {substationInputValue} {sectionInputValue} {equipmentInputValue}
+
+      <div className="d-flex justify-content-center ">
+        <Button
+          type="submit"
+          variant={isAnyInputNotSelected() ? "secondary" : "primary"}
+          disabled={isAnyInputNotSelected()}
+        >
+          Descargar plano
+        </Button>
+      </div>
     </Form>
   );
 }
