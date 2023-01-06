@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getStorage, ref } from "firebase/storage";
+import { collection, getFirestore, getDocs } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,10 +17,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getStorage();
 
+// Get data
+// const colRef = collection(dataBase, "edenor");
+
+// getDocs(colRef).then((snapshot) => {
+//   console.log(snapshot.docs);
+// });
+
 // export const uploadFiles = (file) => {
 //   const storageRef = ref(storage, file.name);
 
-//   // 'file' comes from the Blob or File API
+//    'file' comes from the Blob or File API
 //   uploadBytes(storageRef, file).then((snapshot) => {
 //     console.log(snapshot);
 //   });

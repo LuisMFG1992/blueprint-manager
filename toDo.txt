@@ -1,0 +1,4 @@
+Blueprints-manager
+Traer el JSON de firebase que ya subi
+Ya tengo la url, como empiezo la descarga al llegar la promesa con la url?
+Que hacemos con los acoples? Hay que ponerlos al mismo nivel que las secciones pero eso cambiaria la logica de cuando hacemos el request

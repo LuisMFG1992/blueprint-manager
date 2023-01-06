@@ -281,3 +281,52 @@ export const downLoadFirebaseStorage = (fileName) => {
       console.log(error);
     });
 };
+
+export const substationOptions = dataBase.map((element) => {
+  return (
+    <option key={element.id} value={element.id}>
+      {element.id} - {element.substation}
+    </option>
+  );
+});
+
+export const equipmentsOptions = equipments.map((element) => {
+  return (
+    <option key={element.value} value={element.value}>
+      {element.name}
+    </option>
+  );
+});
+
+export const inputCreator = ({
+  label,
+  name,
+  isRequired,
+  placeholder,
+  options = [],
+}) => {
+  // options = {  }
+  return (
+    <>
+      <Label>{label} </Label>
+      <Select {...register(name)} required={isRequired}>
+        <option disabled value={""}>
+          {placeholder}
+        </option>
+        {options.map((element) => (
+          <option value={element.value}> {element.title} </option>
+        ))}
+      </Select>
+    </>
+  );
+};
+
+const inputsScheme = [
+  // Como voy a vincular el register? Tendria que tener el esquema dentro del componente?
+  {
+    label: "Substatión",
+    name: "substation",
+    placeholder: "Elige una subestación",
+    options: substationOptions,
+  },
+];
