@@ -1,5 +1,7 @@
 import { ref, getDownloadURL } from "firebase/storage";
 import { db } from "./src/FireStore/config";
+import { Form } from "react-bootstrap";
+import { useForm } from "react-hook-form";
 
 export const dataBase = [
   { id: "041", substation: "Libertador", sections: [1, 2], acoples: 1 },
@@ -299,34 +301,40 @@ export const equipmentsOptions = equipments.map((element) => {
 });
 
 export const inputCreator = ({
+  register,
   label,
   name,
   isRequired,
   placeholder,
   options = [],
 }) => {
-  // options = {  }
+  /* 
+  options = [ 
+    { 
+      value: string,
+      title: string
+    },
+    ...
+  ] 
+  */
+
+  console.log("InputCreator: ", register);
+
+  const { Label, Select } = Form;
+
   return (
-    <>
-      <Label>{label} </Label>
+    <div key={name}>
+      <Label>{label}</Label>
       <Select {...register(name)} required={isRequired}>
-        <option disabled value={""}>
-          {placeholder}
-        </option>
-        {options.map((element) => (
-          <option value={element.value}> {element.title} </option>
-        ))}
+        <option value={""}>{placeholder}</option>
+        {options.map((element) => {
+          return (
+            <option key={element.value} value={element.value}>
+              {element.title}
+            </option>
+          );
+        })}
       </Select>
-    </>
+    </div>
   );
 };
-
-const inputsScheme = [
-  // Como voy a vincular el register? Tendria que tener el esquema dentro del componente?
-  {
-    label: "Substatión",
-    name: "substation",
-    placeholder: "Elige una subestación",
-    options: substationOptions,
-  },
-];
