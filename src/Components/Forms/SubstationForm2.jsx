@@ -4,6 +4,7 @@ import {
   dataBase,
   equipmentsOptions,
   inputCreator,
+  getOptions,
   substationOptions,
 } from "../../../utils";
 import InputSelect from "../Inputs/InputSelect";
@@ -14,21 +15,35 @@ const { Group } = Form;
 function SubstationForm2() {
   const { register, handleSubmit, watch } = useForm();
 
+  const lastSubstationSelected = watch("substation");
+  const lastSectionSelected = watch("section");
+
   const inputsScheme = [
     {
       register,
-      label: "Substatión",
+      label: "Substación",
       name: "substation",
       isRequired: true,
       placeholder: "Elige una subestación",
-      options: dataBase.map((element) => {
-        return { value: element.id, title: element.substation };
-      }),
+      options: getOptions(null),
+    },
+    {
+      register,
+      label: "Sección",
+      name: "section",
+      isRequired: true,
+      placeholder: "Elige una sección",
+      options: getOptions(lastSubstationSelected),
+    },
+    {
+      register,
+      label: "Equipos",
+      name: "equipment",
+      isRequired: true,
+      placeholder: "Elige un equipo",
+      options: getOptions(lastSectionSelected),
     },
   ];
-
-  const lastSubstationSelected = watch("substation");
-  const lastSectionSelected = watch("section");
 
   return (
     <Form onSubmit={handleSubmit((data) => console.log(data))}>
@@ -37,37 +52,6 @@ function SubstationForm2() {
           return inputCreator(element);
         })}
       </Group>
-
-      {/* <Group className="mb-3">
-        <InputSelect
-          register={register}
-          label="Substatión"
-          name="substation"
-          placeholder="Elige una subestación"
-          dinamicOptions={substationOptions}
-        />
-      </Group> */}
-
-      {/* <Group className="mb-3">
-        <InputSelect
-          register={register}
-          label="Sección"
-          name="section"
-          placeholder="Elige una sección"
-          dinamicOptions={lastSubstationSelected}
-        />
-      </Group>
-
-      <Group className="mb-3">
-        <InputSelect
-          register={register}
-          label="Equipo"
-          name="equipment"
-          placeholder="Elige un equipo"
-          conditional={lastSectionSelected}
-          dinamicOptions={equipmentsOptions}
-        />
-      </Group> */}
 
       <div className="d-flex justify-content-center ">
         <Button type="submit" variant="primary">

@@ -266,11 +266,11 @@ export const dataBase = [
 ];
 
 export const equipments = [
-  { name: "Transformador", value: "transformador" },
-  { name: "Interruptor", value: "interruptor" },
-  { name: "Banco Capacitor", value: "banco-capacitor" },
-  { name: "Medición", value: "medicion" },
-  { name: "Servicio Interno", value: "servicio-int" },
+  { title: "Transformador", value: "transformador" },
+  { title: "Interruptor", value: "interruptor" },
+  { title: "Banco Capacitor", value: "banco-capacitor" },
+  { title: "Medición", value: "medicion" },
+  { title: "Servicio Interno", value: "servicio-int" },
 ];
 
 export const downLoadFirebaseStorage = (fileName) => {
@@ -318,8 +318,6 @@ export const inputCreator = ({
   ] 
   */
 
-  console.log("InputCreator: ", register);
-
   const { Label, Select } = Form;
 
   return (
@@ -337,4 +335,36 @@ export const inputCreator = ({
       </Select>
     </div>
   );
+};
+
+export const getOptions = (watch) => {
+  if (watch === undefined) {
+    return [];
+  }
+
+  if (watch === null) {
+    const substationsOptions = dataBase.map((element) => {
+      return { value: element.id, title: element.substation };
+    });
+    return substationsOptions;
+  }
+
+  if (watch !== null) {
+    const selectedSubstation = dataBase.find((element) => element.id == watch);
+
+    const sectionOptions =
+      selectedSubstation?.sections?.map((element) => {
+        return {
+          value: element,
+          title: `Secc. ${element}`,
+        };
+      }) || equipments;
+    return sectionOptions;
+  }
+};
+
+export const HELPER = {
+  substation: "substation",
+  section: "section",
+  equipment: "equipment",
 };
