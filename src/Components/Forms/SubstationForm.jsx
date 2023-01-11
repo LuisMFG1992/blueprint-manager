@@ -1,7 +1,8 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { inputCreator, getOptions } from "../../../utils";
+import data from "../../../data/data";
 import { useForm } from "react-hook-form";
+import { getOptionsFromWatch, inputCreator } from "./utils";
 
 const { Group } = Form;
 
@@ -18,7 +19,7 @@ function SubstationForm() {
       name: "substation",
       isRequired: true,
       placeholder: "Elige una subestación",
-      options: getOptions(null),
+      options: getOptionsFromWatch(null, data, undefined),
     },
     {
       register,
@@ -26,7 +27,7 @@ function SubstationForm() {
       name: "section",
       isRequired: true,
       placeholder: "Elige una sección",
-      options: getOptions(lastSubstationSelected),
+      options: getOptionsFromWatch(lastSubstationSelected, data, "sections"),
     },
     {
       register,
@@ -34,7 +35,7 @@ function SubstationForm() {
       name: "equipment",
       isRequired: true,
       placeholder: "Elige un equipo",
-      options: getOptions(lastSectionSelected),
+      options: getOptionsFromWatch(lastSectionSelected, data, undefined),
     },
   ];
 

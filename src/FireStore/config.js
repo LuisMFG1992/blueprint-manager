@@ -27,7 +27,7 @@ export const db = getStorage();
 // export const uploadFiles = (file) => {
 //   const storageRef = ref(storage, file.name);
 
-//    'file' comes from the Blob or File API
+//   //  'file' comes from the Blob or File API
 //   uploadBytes(storageRef, file).then((snapshot) => {
 //     console.log(snapshot);
 //   });

@@ -1,4 +1,4 @@
-export const dataBase = [
+const dataBase = [
   { id: "041", substation: "Libertador", sections: [1, 2], acoples: 1 },
   { id: "044", substation: "P. Nuevo", sections: [1, 2], acoples: 1 },
   {
@@ -260,10 +260,4 @@ export const dataBase = [
   },
 ];
 
-export const equipments = [
-  { title: "Transformador", value: "transformador" },
-  { title: "Interruptor", value: "interruptor" },
-  { title: "Banco Capacitor", value: "banco-capacitor" },
-  { title: "Medición", value: "medicion" },
-  { title: "Servicio Interno", value: "servicio-int" },
-];
+export default dataBase;
