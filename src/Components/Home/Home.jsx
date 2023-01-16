@@ -1,12 +1,14 @@
 import Container from "react-bootstrap/Container";
 import Header from "../Header/Header";
 import SubstationForm from "../Forms/SubstationForm";
+import Previewpdf from "../PreviewPdf/Previewpdf";
 
 const mobile = (
   <div className="maxWidthForMobile mh-50 bg-white roundedTwoRem p-0 shadow mx-4">
     <Header />
     <Container className="p-4">
       <SubstationForm className="bg-light" />
+      <Previewpdf />
     </Container>
   </div>
 );
