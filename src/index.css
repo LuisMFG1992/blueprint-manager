@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  /* @apply text-white; */
+  @apply bg-zinc-100;
+}
+
+.center {
+  @apply flex;
+  @apply justify-center;
+  @apply items-center;
+}
