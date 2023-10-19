@@ -27,7 +27,7 @@ const Input = ({
   return (
     <div>
       <label
-        htmlFor='email-address-icon'
+        htmlFor={name}
         className='mb-2 block text-start text-lg font-semibold text-gray-500'
       >
         {label}
@@ -35,10 +35,11 @@ const Input = ({
       <div className='relative'>
         {icons[icon]}
         <input
+          // autoComplete='off'
           type={inputType}
           name={name}
           value={state}
-          id='email-address-icon'
+          id={name}
           className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-3.5 pl-12 text-lg text-gray-900 focus:border-blue-500 focus:ring-blue-500'
           placeholder={placeholder}
           onChange={(e) => handleInputOnchange(e)}
