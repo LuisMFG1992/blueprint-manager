@@ -6,6 +6,7 @@ import './index.css'
 import { AuthContextProvider } from './context/AuthContext'
 import { Home, LogInPage, SingUpPage } from './pages'
 import ErrorPage from './pages/ErrorPage.jsx'
+import ProtectedRoute from './auth/ProtectedRoute'
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/home',
-    element: <Home />,
+    element: (
+      <ProtectedRoute>
+        <Home />
+      </ProtectedRoute>
+    ),
     errorElement: <ErrorPage />
   }
 ])

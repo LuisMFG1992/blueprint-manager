@@ -6,7 +6,7 @@ import { authContext } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 const Home = ({ setIsLoggedIn }) => {
-  const { userLogOut } = useContext(authContext)
+  const { userLogOut, setIsUserAuth } = useContext(authContext)
   const navigate = useNavigate()
   return (
     <ContainerCenter>
@@ -20,6 +20,7 @@ const Home = ({ setIsLoggedIn }) => {
             color='red'
             callBack={() => {
               userLogOut(auth)
+              setIsUserAuth(false)
               navigate('/')
             }}
           />

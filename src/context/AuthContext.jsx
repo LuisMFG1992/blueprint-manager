@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, { createContext, useState } from 'react'
 import { auth, provider } from '../../firebaseConfig'
 import {
   createUserWithEmailAndPassword,
@@ -10,6 +10,8 @@ import {
 export const authContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
+  const [isUserAuth, setIsUserAuth] = useState(false)
+
   const userCreate = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password)
   }
@@ -28,7 +30,14 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <authContext.Provider
-      value={{ userCreate, userLogOut, userLogIn, userLogInWithGoogle }}
+      value={{
+        userCreate,
+        userLogOut,
+        userLogIn,
+        userLogInWithGoogle,
+        setIsUserAuth,
+        isUserAuth
+      }}
     >
       {children}
     </authContext.Provider>

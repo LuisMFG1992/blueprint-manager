@@ -56,7 +56,7 @@ const SingUpPage = ({ setIsLoggedIn }) => {
         email: '',
         password: ''
       })
-      navigate('/home')
+      navigate('/')
     } catch (error) {
       const errorMessage = error.message.split(' ').slice(1).join(' ')
       setError((prev) => {

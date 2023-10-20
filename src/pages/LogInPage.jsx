@@ -29,7 +29,8 @@ const inputScheme = [
 ]
 
 const LogInPage = ({ setIsLoggedIn }) => {
-  const { userLogIn, userLogInWithGoogle } = useContext(authContext)
+  const { userLogIn, userLogInWithGoogle, setIsUserAuth } =
+    useContext(authContext)
   const navigate = useNavigate()
 
   const [inputsValues, SetInputsValues] = useState({
@@ -54,6 +55,7 @@ const LogInPage = ({ setIsLoggedIn }) => {
     await userLogIn(email, password)
     try {
       console.log('Logged In')
+      setIsUserAuth(true)
       SetInputsValues({
         email: '',
         password: ''
