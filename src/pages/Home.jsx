@@ -21,6 +21,7 @@ const Home = ({ setIsLoggedIn }) => {
             callBack={() => {
               userLogOut(auth)
               setIsUserAuth(false)
+              localStorage.setItem('isUserAuth', false)
               navigate('/')
             }}
           />

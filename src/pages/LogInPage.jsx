@@ -34,8 +34,8 @@ const LogInPage = ({ setIsLoggedIn }) => {
   const navigate = useNavigate()
 
   const [inputsValues, SetInputsValues] = useState({
-    email: '',
-    password: ''
+    email: 'luis.flores00@hotmail.com',
+    password: '123456'
   })
   const [error, setError] = useState({
     error: false,
@@ -54,11 +54,11 @@ const LogInPage = ({ setIsLoggedIn }) => {
     const { email, password } = inputsValues
     await userLogIn(email, password)
     try {
-      console.log('Logged In')
       setIsUserAuth(true)
+      localStorage.setItem('isUserAuth', true)
       SetInputsValues({
-        email: '',
-        password: ''
+        email: 'luis.flores00@hotmail.com',
+        password: '123456'
       })
       navigate('/home')
     } catch (error) {
@@ -72,7 +72,6 @@ const LogInPage = ({ setIsLoggedIn }) => {
   const logInWithGoogle = async () => {
     await userLogInWithGoogle()
     try {
-      console.log('Logged In')
       navigate('/home')
     } catch (error) {
       const errorMessage = error.message.split(' ').slice(1).join(' ')

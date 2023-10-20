@@ -10,7 +10,11 @@ import {
 export const authContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
-  const [isUserAuth, setIsUserAuth] = useState(false)
+  const isUserAuthLS = localStorage.getItem('isUserAuth')
+  console.log({ isUserAuthLS })
+  const [isUserAuth, setIsUserAuth] = useState(
+    isUserAuthLS !== undefined ? isUserAuthLS : false
+  )
 
   const userCreate = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password)
