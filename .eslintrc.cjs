@@ -31,6 +31,7 @@ module.exports = {
     'no-multiple-empty-lines': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
-    'multiline-ternary': 'off'
+    'multiline-ternary': 'off',
+    'react/no-unescaped-entities': 'off'
   }
 }

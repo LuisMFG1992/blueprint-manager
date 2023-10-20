@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Button from '../components/Button'
-import { logOut } from '../../utils'
-import { signOut } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
 import ContainerCenter from '../components/ContainerCenter'
+import { authContext } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const Home = ({ setIsLoggedIn }) => {
+  const { userLogOut } = useContext(authContext)
+  const navigate = useNavigate()
   return (
     <ContainerCenter>
       <div className='flex rounded-xl shadow-2xl'>
@@ -16,7 +18,10 @@ const Home = ({ setIsLoggedIn }) => {
           <Button
             text='Log Out'
             color='red'
-            callBack={() => logOut(signOut, auth, setIsLoggedIn)}
+            callBack={() => {
+              userLogOut(auth)
+              navigate('/')
+            }}
           />
         </div>
       </div>

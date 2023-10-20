@@ -1,17 +1,11 @@
-import React, { useState } from 'react'
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup
-} from 'firebase/auth'
-
-import { auth, provider } from '../../firebaseConfig'
-import Input from '../components/Input'
-import Button from '../components/Button'
-import GoogleButton from '../components/GoogleButton'
+import React, { useContext, useState } from 'react'
 
 import substation from '../assets/substation.jpg'
 import ContainerCenter from '../components/ContainerCenter'
+import { authContext } from '../context/AuthContext'
+import { Link, useNavigate } from 'react-router-dom'
+import Input from '../components/Input'
+import Button from '../components/Button'
 
 const inputScheme = [
   {
@@ -30,7 +24,11 @@ const inputScheme = [
   }
 ]
 
-const NotLoggedIn = ({ setIsLoggedIn }) => {
+const SingUpPage = ({ setIsLoggedIn }) => {
+  const navigate = useNavigate()
+
+  const { userCreate } = useContext(authContext)
+
   const [inputsValues, SetInputsValues] = useState({
     email: '',
     password: ''
@@ -47,56 +45,24 @@ const NotLoggedIn = ({ setIsLoggedIn }) => {
     })
   }
 
-  const signUp = (e) => {
+  const signUp = async (e) => {
     e.preventDefault()
     const { email, password } = inputsValues
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log('signUp')
-      })
-      .catch((error) => {
-        const errorMessage = error.message.split(' ').slice(1).join(' ')
-        setError((prev) => {
-          return { ...prev, error: true, message: errorMessage }
-        })
-      })
 
-    SetInputsValues({
-      email: '',
-      password: ''
-    })
-  }
-
-  const LogIn = (e) => {
-    e.preventDefault()
-    const { email, password } = inputsValues
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setIsLoggedIn(true)
-        console.log('Signed In')
+    await userCreate(email, password)
+    try {
+      console.log('signUp')
+      SetInputsValues({
+        email: '',
+        password: ''
       })
-      .catch((error) => {
-        const errorMessage = error.message.split(' ').slice(1).join(' ')
-        setError((prev) => {
-          return { ...prev, error: true, message: errorMessage }
-        })
+      navigate('/home')
+    } catch (error) {
+      const errorMessage = error.message.split(' ').slice(1).join(' ')
+      setError((prev) => {
+        return { ...prev, error: true, message: errorMessage }
       })
-
-    SetInputsValues({
-      email: '',
-      password: ''
-    })
-  }
-
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        setIsLoggedIn(true)
-        console.log('Signed In')
-      })
-      .catch((error) => {
-        console.log(error.message)
-      })
+    }
   }
 
   return (
@@ -132,11 +98,18 @@ const NotLoggedIn = ({ setIsLoggedIn }) => {
               })}
             </div>
 
-            <div className='inline-flex gap-2'>
-              <Button text='Log In' color='green' callBack={LogIn} />
-              <Button text='Register' color='green' callBack={signUp} />
-              <GoogleButton color='blue' callback={signInWithGoogle} />
-            </div>
+            <Button
+              text='Create account'
+              color='green'
+              type='submit'
+              callBack={signUp}
+            />
+            <p>
+              Already have an account?{' '}
+              <Link to={'/'} className='font-semibold text-blue-600'>
+                Log in here.
+              </Link>
+            </p>
           </form>
           {error.error && (
             <div className='mt-2 rounded-lg bg-red-200 px-2 py-4 text-center text-lg font-medium text-red-600 '>
@@ -155,4 +128,4 @@ const NotLoggedIn = ({ setIsLoggedIn }) => {
   )
 }
 
-export default NotLoggedIn
+export default SingUpPage
