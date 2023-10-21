@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { auth, provider } from '../../firebaseConfig'
 import {
   createUserWithEmailAndPassword,
@@ -10,11 +10,14 @@ import {
 export const authContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
-  const isUserAuthLS = localStorage.getItem('isUserAuth')
-  console.log({ isUserAuthLS })
-  const [isUserAuth, setIsUserAuth] = useState(
-    isUserAuthLS !== undefined ? isUserAuthLS : false
-  )
+  const [isUserAuth, setIsUserAuth] = useState(false)
+
+  useEffect(() => {
+    const isUserAuthLS = localStorage.getItem('isUserAuth')
+    if (isUserAuthLS !== null) {
+      setIsUserAuth(JSON.parse(isUserAuthLS))
+    }
+  }, [])
 
   const userCreate = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password)

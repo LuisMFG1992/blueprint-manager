@@ -57,8 +57,8 @@ const LogInPage = ({ setIsLoggedIn }) => {
       setIsUserAuth(true)
       localStorage.setItem('isUserAuth', true)
       SetInputsValues({
-        email: 'luis.flores00@hotmail.com',
-        password: '123456'
+        email: '',
+        password: ''
       })
       navigate('/home')
     } catch (error) {
