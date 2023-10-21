@@ -80,7 +80,7 @@ const SingUpPage = ({ setIsLoggedIn }) => {
             className='flex w-full flex-col gap-4'
             onSubmit={(e) => signUp(e)}
           >
-            <div className='flex flex-col gap-4 pb-6'>
+            <div className='flex flex-col gap-4'>
               {inputScheme.map((input) => {
                 const { name, label, placeholder, inputType, icon } = input
                 return (

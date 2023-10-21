@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from 'react'
 import { auth, provider } from '../../firebaseConfig'
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut
@@ -35,6 +36,10 @@ export const AuthContextProvider = ({ children }) => {
     return signInWithPopup(auth, provider)
   }
 
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email)
+  }
+
   return (
     <authContext.Provider
       value={{
@@ -43,6 +48,7 @@ export const AuthContextProvider = ({ children }) => {
         userLogIn,
         userLogInWithGoogle,
         setIsUserAuth,
+        resetPassword,
         isUserAuth
       }}
     >

@@ -1,7 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { ErrorPage, Home, LogInPage, SingUpPage } from '../pages'
-import PrivateRoute from './PrivateRoute'
-import PublicRoute from './PublicRoute'
+import {
+  ErrorPage,
+  ForgotPassword,
+  Home,
+  LogInPage,
+  SingUpPage
+} from '../pages'
+import PublicRoute from './protectedRoutes/PublicRoute'
+import PrivateRoute from './protectedRoutes/PrivateRoute'
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +25,15 @@ export const router = createBrowserRouter([
     element: (
       <PublicRoute>
         <SingUpPage />
+      </PublicRoute>
+    )
+  },
+  {
+    path: '/account-recovery',
+    errorElement: <ErrorPage />,
+    element: (
+      <PublicRoute>
+        <ForgotPassword />
       </PublicRoute>
     )
   },

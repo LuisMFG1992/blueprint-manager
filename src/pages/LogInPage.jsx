@@ -15,7 +15,7 @@ const inputScheme = [
   {
     name: 'email',
     label: 'Your Email',
-    placeholder: 'name@flowbite.com',
+    placeholder: 'Your@email.com',
     inputType: 'email',
     icon: 'email'
   },
@@ -52,16 +52,20 @@ const LogInPage = ({ setIsLoggedIn }) => {
   const LogIn = async (e) => {
     e.preventDefault()
     const { email, password } = inputsValues
-    await userLogIn(email, password)
+    const res = await userLogIn(email, password)
     try {
-      setIsUserAuth(true)
-      localStorage.setItem('isUserAuth', true)
-      SetInputsValues({
-        email: '',
-        password: ''
-      })
+      if (!res.ok) {
+        setIsUserAuth(true)
+        localStorage.setItem('isUserAuth', true)
+        SetInputsValues({
+          email: '',
+          password: ''
+        })
+      }
+
       navigate('/home')
     } catch (error) {
+      console.log('ERROR')
       const errorMessage = error.message.split(' ').slice(1).join(' ')
       setError((prev) => {
         return { ...prev, error: true, message: errorMessage }
@@ -79,15 +83,6 @@ const LogInPage = ({ setIsLoggedIn }) => {
         return { ...prev, error: true, message: errorMessage }
       })
     }
-
-    //   signInWithPopup(auth, provider)
-    //     .then((result) => {
-    //       setIsLoggedIn(true)
-    //       console.log('Signed In')
-    //     })
-    //     .catch((error) => {
-    //       console.log(error.message)
-    //     })
   }
 
   return (
@@ -105,7 +100,7 @@ const LogInPage = ({ setIsLoggedIn }) => {
             className='flex w-full flex-col gap-4'
             onSubmit={(e) => LogIn(e)}
           >
-            <div className='flex flex-col gap-4 pb-6'>
+            <div className='flex flex-col gap-4'>
               {inputScheme.map((input) => {
                 const { name, label, placeholder, inputType, icon } = input
                 return (
@@ -122,10 +117,22 @@ const LogInPage = ({ setIsLoggedIn }) => {
                 )
               })}
             </div>
+            <p>
+              <Link
+                to={'/account-recovery'}
+                className='font-semibold text-blue-600'
+              >
+                Forgot your password?
+              </Link>
+            </p>
 
-            <div className='inline-flex gap-4'>
+            <div className='inline-flex items-center gap-4'>
               <Button text='Log In' color='green' callBack={LogIn} />
-              <GoogleButton callback={logInWithGoogle} />
+              <p className='text-lg text-gray-500'>or</p>
+              <GoogleButton
+                text='Continue with Google'
+                callback={logInWithGoogle}
+              />
             </div>
             <p>
               Don't have an account yet?{' '}

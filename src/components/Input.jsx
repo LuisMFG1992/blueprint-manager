@@ -35,7 +35,6 @@ const Input = ({
       <div className='relative'>
         {icons[icon]}
         <input
-          // autoComplete='off'
           type={inputType}
           name={name}
           value={state}
