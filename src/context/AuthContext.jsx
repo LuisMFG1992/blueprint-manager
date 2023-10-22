@@ -1,23 +1,30 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { auth, provider } from '../../firebaseConfig'
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   sendPasswordResetEmail,
+  sendSignInLinkToEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut
 } from 'firebase/auth'
+import { HOME_URL } from '../constants'
 
 export const authContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
-  const [isUserAuth, setIsUserAuth] = useState(false)
+  const [user, setUser] = useState(localStorage.getItem('user'))
 
   useEffect(() => {
-    const isUserAuthLS = localStorage.getItem('isUserAuth')
-    if (isUserAuthLS !== null) {
-      setIsUserAuth(JSON.parse(isUserAuthLS))
-    }
+    const unsubscribe = () =>
+      onAuthStateChanged(auth, (currentUser) => {
+        console.log(currentUser)
+        localStorage.setItem('user', JSON.stringify(currentUser))
+        setUser(currentUser)
+      })
+
+    unsubscribe()
   }, [])
 
   const userCreate = (email, password) => {
@@ -40,6 +47,13 @@ export const AuthContextProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email)
   }
 
+  const sendEmailVerification = (email) => {
+    return sendSignInLinkToEmail(auth, email, {
+      url: HOME_URL,
+      handleCodeInApp: true
+    })
+  }
+
   return (
     <authContext.Provider
       value={{
@@ -47,12 +61,17 @@ export const AuthContextProvider = ({ children }) => {
         userLogOut,
         userLogIn,
         userLogInWithGoogle,
-        setIsUserAuth,
         resetPassword,
-        isUserAuth
+        sendEmailVerification,
+        user,
+        setUser
       }}
     >
       {children}
     </authContext.Provider>
   )
+}
+
+export const useAuth = () => {
+  return useContext(authContext)
 }

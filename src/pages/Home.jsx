@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import InputSelect from '../components/InputSelect'
 
 const Home = ({ setIsLoggedIn }) => {
-  const { userLogOut, setIsUserAuth } = useContext(authContext)
+  const { userLogOut } = useContext(authContext)
   const navigate = useNavigate()
   return (
     <ContainerCenter>
@@ -16,11 +16,11 @@ const Home = ({ setIsLoggedIn }) => {
           <h1 className='text-center text-[3rem] font-bold text-gray-600'>
             Blueprint Manager
           </h1>
-          <div className='inline-flex gap-20'>
+          {/* <div className='inline-flex gap-20'>
             <InputSelect />
             <InputSelect />
             <InputSelect />
-          </div>
+          </div> */}
 
           <div className='center'>
             <Button
@@ -28,7 +28,7 @@ const Home = ({ setIsLoggedIn }) => {
               color='red'
               callBack={() => {
                 userLogOut(auth)
-                setIsUserAuth(false)
+                // setIsUserAuth(false)
                 localStorage.setItem('isUserAuth', false)
                 navigate('/')
               }}

@@ -27,7 +27,7 @@ const inputScheme = [
 const SingUpPage = ({ setIsLoggedIn }) => {
   const navigate = useNavigate()
 
-  const { userCreate } = useContext(authContext)
+  const { userCreate, sendEmailVerification } = useContext(authContext)
 
   const [inputsValues, SetInputsValues] = useState({
     email: '',
@@ -52,6 +52,8 @@ const SingUpPage = ({ setIsLoggedIn }) => {
     await userCreate(email, password)
     try {
       console.log('signUp')
+      sendEmailVerification(email)
+      alert('Please verify your email.')
       SetInputsValues({
         email: '',
         password: ''
