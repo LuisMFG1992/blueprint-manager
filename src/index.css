@@ -20,3 +20,12 @@ body {
     rgba(13, 144, 34, 1) 85%
   );
 }
+
+.vStack {
+  @apply inline-flex;
+}
+
+.hStack {
+  @apply flex;
+  @apply flex-col;
+}

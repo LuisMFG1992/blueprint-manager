@@ -1,23 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import ErrorPage from './pages/ErrorPage.jsx'
+import { BrowserRouter } from 'react-router-dom'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    errorElement: <ErrorPage />
-  }
-  //   {
-  //     path: '/register',
-  //     element: <App />,
-  //     errorElement: <ErrorPage />
-  //   }
-])
+import './index.css'
+import { AuthContextProvider } from './context/AuthContext'
+import App from './App'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <AuthContextProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </AuthContextProvider>
 )

@@ -1,20 +1,30 @@
 import './App.css'
 
-import { useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
 
-import Home from './pages/Home'
-import NotLoggedIn from './pages/NotLoggedIn'
+import { ErrorPage, ForgotPassword, Home, LogInPage, SingUpPage } from './pages'
+import PrivateRoute from './router/protectedRoutes/PrivateRoute'
+import PublicRoute from './router/protectedRoutes/PublicRoute'
+import ContainerCenter from './components/ContainerCenter'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
   return (
     <>
-      {isLoggedIn ? (
-        <Home setIsLoggedIn={setIsLoggedIn} />
-      ) : (
-        <NotLoggedIn setIsLoggedIn={setIsLoggedIn} />
-      )}
+      <ContainerCenter>
+        <Routes>
+          {/* <Route element={<PublicRoute />}> */}
+          <Route path='/' element={<LogInPage />} />
+          <Route path='/register' element={<SingUpPage />} />
+          <Route path='/account-recovery' element={<ForgotPassword />} />
+          {/* </Route> */}
+
+          {/* <Route element={<PrivateRoute />}> */}
+          <Route path='/home' element={<Home />} />
+          {/* </Route> */}
+
+          <Route path='*' element={<ErrorPage />} />
+        </Routes>
+      </ContainerCenter>
     </>
   )
 }

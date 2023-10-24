@@ -1,8 +1,10 @@
 import React from 'react'
 import ContainerCenter from '../components/ContainerCenter'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 const ErrorPage = () => {
+  const { user } = useAuth()
   return (
     <ContainerCenter>
       <section className='flex rounded-xl bg-white shadow-2xl'>
@@ -19,10 +21,10 @@ const ErrorPage = () => {
               the home page.
             </p>
             <Link
-              to={'/'}
+              to={user ? '/home' : '/'}
               className='hover:bg-primary-800 focus:ring-primary-300 dark:focus:ring-primary-900 my-4 inline-flex rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4'
             >
-              Back to Homepage
+              Back to the {user ? 'Home page' : 'Login page'}.
             </Link>
           </div>
         </div>

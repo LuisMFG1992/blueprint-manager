@@ -1,17 +1,10 @@
-import React, { useState } from 'react'
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup
-} from 'firebase/auth'
-
-import { auth, provider } from '../../firebaseConfig'
-import Input from '../components/Input'
-import Button from '../components/Button'
-import GoogleButton from '../components/GoogleButton'
+import React, { useContext, useState } from 'react'
 
 import substation from '../assets/substation.jpg'
-import ContainerCenter from '../components/ContainerCenter'
+import { authContext } from '../context/AuthContext'
+import { Link, useNavigate } from 'react-router-dom'
+import Input from '../components/Input'
+import Button from '../components/Button'
 
 const inputScheme = [
   {
@@ -30,15 +23,16 @@ const inputScheme = [
   }
 ]
 
-const NotLoggedIn = ({ setIsLoggedIn }) => {
+const SingUpPage = () => {
+  const navigate = useNavigate()
+
+  const { userCreate, sendEmailVerification } = useContext(authContext)
+
   const [inputsValues, SetInputsValues] = useState({
     email: '',
     password: ''
   })
-  const [error, setError] = useState({
-    error: false,
-    message: ''
-  })
+  const [error, setError] = useState('')
 
   const handleInputOnchange = (e) => {
     const { name, value } = e.target
@@ -47,60 +41,25 @@ const NotLoggedIn = ({ setIsLoggedIn }) => {
     })
   }
 
-  const signUp = (e) => {
+  const signUp = async (e) => {
     e.preventDefault()
     const { email, password } = inputsValues
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log('signUp')
-      })
-      .catch((error) => {
-        const errorMessage = error.message.split(' ').slice(1).join(' ')
-        setError((prev) => {
-          return { ...prev, error: true, message: errorMessage }
-        })
-      })
 
-    SetInputsValues({
-      email: '',
-      password: ''
-    })
-  }
-
-  const LogIn = (e) => {
-    e.preventDefault()
-    const { email, password } = inputsValues
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setIsLoggedIn(true)
-        console.log('Signed In')
+    try {
+      await userCreate(email, password)
+      sendEmailVerification(email)
+      SetInputsValues({
+        email: '',
+        password: ''
       })
-      .catch((error) => {
-        const errorMessage = error.message.split(' ').slice(1).join(' ')
-        setError((prev) => {
-          return { ...prev, error: true, message: errorMessage }
-        })
-      })
-
-    SetInputsValues({
-      email: '',
-      password: ''
-    })
-  }
-
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        setIsLoggedIn(true)
-        console.log('Signed In')
-      })
-      .catch((error) => {
-        console.log(error.message)
-      })
+      navigate('/')
+    } catch (error) {
+      setError(error.message)
+    }
   }
 
   return (
-    <ContainerCenter>
+    <>
       <div className='flex shadow-2xl'>
         <div className='relative h-[800px] w-[600px] flex-col rounded-s-xl bg-white p-10'>
           <h1 className='pb-4 pt-16 text-center text-[3rem] font-bold text-gray-600'>
@@ -114,7 +73,7 @@ const NotLoggedIn = ({ setIsLoggedIn }) => {
             className='flex w-full flex-col gap-4'
             onSubmit={(e) => signUp(e)}
           >
-            <div className='flex flex-col gap-4 pb-6'>
+            <div className='flex flex-col gap-4'>
               {inputScheme.map((input) => {
                 const { name, label, placeholder, inputType, icon } = input
                 return (
@@ -132,15 +91,22 @@ const NotLoggedIn = ({ setIsLoggedIn }) => {
               })}
             </div>
 
-            <div className='inline-flex gap-2'>
-              <Button text='Log In' color='green' callBack={LogIn} />
-              <Button text='Register' color='green' callBack={signUp} />
-              <GoogleButton color='blue' callback={signInWithGoogle} />
-            </div>
+            <Button
+              text='Create account'
+              color='green'
+              type='submit'
+              callBack={signUp}
+            />
+            <p>
+              Already have an account?{' '}
+              <Link to={'/'} className='font-semibold text-blue-600'>
+                Log in here.
+              </Link>
+            </p>
           </form>
-          {error.error && (
+          {error && (
             <div className='mt-2 rounded-lg bg-red-200 px-2 py-4 text-center text-lg font-medium text-red-600 '>
-              {error.message}
+              {error}
             </div>
           )}
           <p className='absolute bottom-2 left-4 text-gray-500'>
@@ -151,8 +117,8 @@ const NotLoggedIn = ({ setIsLoggedIn }) => {
           <img src={substation} className='h-full w-full object-cover' alt='' />
         </div>
       </div>
-    </ContainerCenter>
+    </>
   )
 }
 
-export default NotLoggedIn
+export default SingUpPage
