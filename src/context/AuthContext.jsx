@@ -14,7 +14,7 @@ import { HOME_URL } from '../constants'
 export const authContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(localStorage.getItem('user'))
+  const [user, setUser] = useState({})
 
   useEffect(() => {
     const unsubscribe = () =>

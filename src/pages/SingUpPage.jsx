@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 
 import substation from '../assets/substation.jpg'
-import ContainerCenter from '../components/ContainerCenter'
 import { authContext } from '../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import Input from '../components/Input'
@@ -24,7 +23,7 @@ const inputScheme = [
   }
 ]
 
-const SingUpPage = ({ setIsLoggedIn }) => {
+const SingUpPage = () => {
   const navigate = useNavigate()
 
   const { userCreate, sendEmailVerification } = useContext(authContext)
@@ -33,10 +32,7 @@ const SingUpPage = ({ setIsLoggedIn }) => {
     email: '',
     password: ''
   })
-  const [error, setError] = useState({
-    error: false,
-    message: ''
-  })
+  const [error, setError] = useState('')
 
   const handleInputOnchange = (e) => {
     const { name, value } = e.target
@@ -49,26 +45,21 @@ const SingUpPage = ({ setIsLoggedIn }) => {
     e.preventDefault()
     const { email, password } = inputsValues
 
-    await userCreate(email, password)
     try {
-      console.log('signUp')
+      await userCreate(email, password)
       sendEmailVerification(email)
-      alert('Please verify your email.')
       SetInputsValues({
         email: '',
         password: ''
       })
       navigate('/')
     } catch (error) {
-      const errorMessage = error.message.split(' ').slice(1).join(' ')
-      setError((prev) => {
-        return { ...prev, error: true, message: errorMessage }
-      })
+      setError(error.message)
     }
   }
 
   return (
-    <ContainerCenter>
+    <>
       <div className='flex shadow-2xl'>
         <div className='relative h-[800px] w-[600px] flex-col rounded-s-xl bg-white p-10'>
           <h1 className='pb-4 pt-16 text-center text-[3rem] font-bold text-gray-600'>
@@ -113,9 +104,9 @@ const SingUpPage = ({ setIsLoggedIn }) => {
               </Link>
             </p>
           </form>
-          {error.error && (
+          {error && (
             <div className='mt-2 rounded-lg bg-red-200 px-2 py-4 text-center text-lg font-medium text-red-600 '>
-              {error.message}
+              {error}
             </div>
           )}
           <p className='absolute bottom-2 left-4 text-gray-500'>
@@ -126,7 +117,7 @@ const SingUpPage = ({ setIsLoggedIn }) => {
           <img src={substation} className='h-full w-full object-cover' alt='' />
         </div>
       </div>
-    </ContainerCenter>
+    </>
   )
 }
 

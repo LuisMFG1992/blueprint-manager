@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import ContainerCenter from '../components/ContainerCenter'
 import { Link } from 'react-router-dom'
 import Input from '../components/Input'
 import { authContext } from '../context/AuthContext'
@@ -7,6 +6,7 @@ import { authContext } from '../context/AuthContext'
 const ForgotPassword = () => {
   const [email, setEmail] = useState('')
   const { resetPassword } = useContext(authContext)
+  const [error, setError] = useState(null)
 
   const handleInputOnchange = (e) => {
     const { value } = e.target
@@ -17,16 +17,18 @@ const ForgotPassword = () => {
     e.preventDefault()
     if (!email) console.log('No email')
 
-    const res = resetPassword(email)
     try {
-      if (!res.ok) console.log('ERROR!!!')
+      const res = await resetPassword(email)
+      if (!res) console.log('TRY ERROR')
       console.log(res)
-    } catch (error) {}
-    console.log(email)
+    } catch (error) {
+      console.log('CATCH ERROR', error)
+      setError(error.message)
+    }
   }
 
   return (
-    <ContainerCenter>
+    <>
       <div className='center relative flex h-[800px] w-[1200px] flex-col items-center gap-4 rounded-xl bg-white p-10'>
         <div>
           <h2 className='text-center text-[2.8rem] font-bold text-gray-600'>
@@ -56,6 +58,11 @@ const ForgotPassword = () => {
             Submit
           </button>
         </form>
+        {error && (
+          <div className='mt-2 rounded-lg bg-red-200 px-2 py-4 text-center text-lg font-medium text-red-600 '>
+            {error}
+          </div>
+        )}
         <p>
           Already have an account?{' '}
           <Link to={'/'} className='font-semibold text-blue-600'>
@@ -69,7 +76,7 @@ const ForgotPassword = () => {
           </Link>
         </p>
       </div>
-    </ContainerCenter>
+    </>
   )
 }
 

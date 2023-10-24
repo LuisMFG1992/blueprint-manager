@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import Input from '../components/Input'
 import Button from '../components/Button'
 import GoogleButton from '../components/GoogleButton'
-import ContainerCenter from '../components/ContainerCenter'
 
 import { authContext } from '../context/AuthContext'
 
@@ -37,10 +36,7 @@ const LogInPage = ({ setIsLoggedIn }) => {
     email: '',
     password: ''
   })
-  const [error, setError] = useState({
-    error: false,
-    message: ''
-  })
+  const [error, setError] = useState('')
 
   const handleInputOnchange = (e) => {
     const { name, value } = e.target
@@ -52,23 +48,21 @@ const LogInPage = ({ setIsLoggedIn }) => {
   const LogIn = async (e) => {
     e.preventDefault()
     const { email, password } = inputsValues
-    const res = await userLogIn(email, password)
     try {
-      if (!res.ok) {
-        localStorage.setItem('isUserAuth', true)
-        SetInputsValues({
-          email: '',
-          password: ''
-        })
+      const res = await userLogIn(email, password)
+      if (!res) {
+        console.log('TRY ERROR')
+        return
       }
+
+      SetInputsValues({
+        email: '',
+        password: ''
+      })
 
       navigate('/home')
     } catch (error) {
-      console.log('ERROR')
-      const errorMessage = error.message.split(' ').slice(1).join(' ')
-      setError((prev) => {
-        return { ...prev, error: true, message: errorMessage }
-      })
+      setError(error.message)
     }
   }
 
@@ -77,7 +71,6 @@ const LogInPage = ({ setIsLoggedIn }) => {
     try {
       if (!res.ok) console.log('ERROR!!!')
       setIsUserAuth(true)
-      localStorage.setItem('isUserAuth', true)
       navigate('/home')
     } catch (error) {
       const errorMessage = error.message.split(' ').slice(1).join(' ')
@@ -88,7 +81,7 @@ const LogInPage = ({ setIsLoggedIn }) => {
   }
 
   return (
-    <ContainerCenter>
+    <>
       <div className='flex shadow-2xl'>
         <div className='relative h-[800px] w-[600px] flex-col rounded-s-xl bg-white p-10'>
           <h1 className='pb-4 pt-6 text-center text-[3rem] font-bold text-gray-600'>
@@ -143,9 +136,9 @@ const LogInPage = ({ setIsLoggedIn }) => {
               </Link>
             </p>
           </form>
-          {error.error && (
+          {error && (
             <div className='mt-2 rounded-lg bg-red-200 px-2 py-4 text-center text-lg font-medium text-red-600 '>
-              {error.message}
+              {error}
             </div>
           )}
           <p className='absolute bottom-2 left-4 text-gray-500'>
@@ -156,7 +149,7 @@ const LogInPage = ({ setIsLoggedIn }) => {
           <img src={substation} className='h-full w-full object-cover' alt='' />
         </div>
       </div>
-    </ContainerCenter>
+    </>
   )
 }
 

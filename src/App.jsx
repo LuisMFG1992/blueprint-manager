@@ -1,7 +1,32 @@
 import './App.css'
 
+import { Route, Routes } from 'react-router-dom'
+
+import { ErrorPage, ForgotPassword, Home, LogInPage, SingUpPage } from './pages'
+import PrivateRoute from './router/protectedRoutes/PrivateRoute'
+import PublicRoute from './router/protectedRoutes/PublicRoute'
+import ContainerCenter from './components/ContainerCenter'
+
 function App() {
-  return <div>App component</div>
+  return (
+    <>
+      <ContainerCenter>
+        <Routes>
+          {/* <Route element={<PublicRoute />}> */}
+          <Route path='/' element={<LogInPage />} />
+          <Route path='/register' element={<SingUpPage />} />
+          <Route path='/account-recovery' element={<ForgotPassword />} />
+          {/* </Route> */}
+
+          {/* <Route element={<PrivateRoute />}> */}
+          <Route path='/home' element={<Home />} />
+          {/* </Route> */}
+
+          <Route path='*' element={<ErrorPage />} />
+        </Routes>
+      </ContainerCenter>
+    </>
+  )
 }
 
 export default App
