@@ -60,11 +60,9 @@ const Home = () => {
     <>
       <div className='flex rounded-xl shadow-2xl'>
         <div className='flex h-[800px] w-[1200px] flex-col gap-10 rounded-xl bg-white p-10'>
-          {JSON.stringify(selectedFields)}
           <h1 className='text-center text-[3rem] font-bold text-gray-600'>
             Blueprint Manager
           </h1>
-          <Divider />
           <form className='hStack gap-10' onSubmit={(e) => onSubmit(e)}>
             <div className='vStack items-center justify-evenly'>
               <InputSelect
@@ -79,7 +77,7 @@ const Home = () => {
                     htmlFor='sections'
                     className='mb-2 block text-sm font-medium text-gray-500'
                   >
-                    Choose a section
+                    Section
                   </label>
                   <select
                     id='sections'
@@ -87,10 +85,10 @@ const Home = () => {
                     className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
                     onChange={(e) => handleOnchange(e)}
                   >
-                    <option defaultValue>Choose a substation</option>
+                    <option defaultValue>Select a section</option>
                     {getSections(selectedFields.substation).map((section) => (
                       <option key={section} value={section}>
-                        {section}
+                        {titleCase(section)}
                       </option>
                     ))}
                   </select>
@@ -103,7 +101,7 @@ const Home = () => {
                     htmlFor='equipment'
                     className='mb-2 block text-sm font-medium text-gray-500'
                   >
-                    Choose a equipment
+                    Equipment
                   </label>
                   <select
                     id='equipment'
@@ -111,12 +109,11 @@ const Home = () => {
                     className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
                     onChange={(e) => handleOnchange(e)}
                   >
-                    <option defaultValue>Choose a equipment</option>
+                    <option defaultValue>Select an equipment</option>
                     {getEquipment(selectedFields.section).map((equipment) => {
-                      const title = titleCase(equipment)
                       return (
                         <option key={equipment} value={equipment}>
-                          {title}
+                          {titleCase(equipment)}
                         </option>
                       )
                     })}
