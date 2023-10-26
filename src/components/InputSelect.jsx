@@ -1,4 +1,14 @@
-const InputSelect = ({ name, label, options = [], handleOnchange }) => {
+const titleCase = (str) => {
+  return str.replace(/_/g, ' ').replace(/\b\w/g, (match) => match.toUpperCase())
+}
+
+const InputSelect = ({
+  name,
+  label,
+  options = [],
+  handleOnchange,
+  disabled
+}) => {
   return (
     <div className='flex flex-col'>
       <label
@@ -8,15 +18,16 @@ const InputSelect = ({ name, label, options = [], handleOnchange }) => {
         {label}
       </label>
       <select
+        disabled={disabled}
         id='countries'
         name={name}
         className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
         onChange={(e) => handleOnchange(e)}
       >
-        <option defaultValue>Choose a substation</option>
+        <option defaultValue>Select a {label}</option>
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.name}
+          <option key={option.value || option} value={option.value || option}>
+            {titleCase(option.name || option)}
           </option>
         ))}
       </select>
