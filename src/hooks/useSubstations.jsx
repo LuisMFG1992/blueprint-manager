@@ -2,7 +2,7 @@ import { collection, getDocs } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import { db } from '../firebase/firebaseConfig'
 
-const useSubstation = () => {
+const useSubstations = () => {
   const [substations, setSubstations] = useState([])
 
   const docRef = collection(db, 'substations')
@@ -20,4 +20,4 @@ const useSubstation = () => {
   return substations
 }
 
-export default useSubstation
+export default useSubstations
