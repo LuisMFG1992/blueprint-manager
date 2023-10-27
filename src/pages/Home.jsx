@@ -30,7 +30,7 @@ const Home = () => {
     return sectionsOptions
   }
 
-  const getEquipment = (value) => {
+  const getEquipment = () => {
     const substationObj = data.find(
       (element) => element.value === selectedFields.substation
     )
@@ -44,7 +44,6 @@ const Home = () => {
       (element) => element.value === selectedFields.substation
     )
     const { section, equipment } = selectedFields
-    // console.log(substation.sections[section][equipment])
     window.open(substation.sections[section][equipment])
   }
 
@@ -78,46 +77,43 @@ const Home = () => {
 
   return (
     <section>
-      <div className='flex rounded-xl shadow-2xl'>
-        <div className='flex h-[800px] w-[1200px] flex-col gap-10 rounded-xl bg-white p-10'>
-          <h1 className='text-center text-[3rem] font-bold text-gray-600'>
-            Blueprint Manager
-          </h1>
-          <form className='hStack gap-10' onSubmit={(e) => onSubmit(e)}>
-            <div className='vStack items-center justify-evenly'>
-              {inputSchema.map(
-                ({ name, label, options, handleOnchange, disabled }) => (
-                  <InputSelect
-                    key={name}
-                    name={name}
-                    label={label}
-                    options={options}
-                    handleOnchange={handleOnchange}
-                    disabled={disabled}
-                  />
-                )
-              )}
-            </div>
-            <div className='center'>
-              <Button
-                type='submit'
-                text={'Open blueprint'}
-                color={'blue'}
-                disabled={true}
-              />
-            </div>
-          </form>
-          <div className='center'>
-            <Button
-              text='Log Out'
-              color='red'
-              callBack={() => {
-                userLogOut(auth)
-                navigate('/')
-              }}
-            />
+      <div className='hStack h-[800px] w-[1200px] items-center gap-10 rounded-xl bg-white p-10 shadow-2xl'>
+        <h1 className='text-center text-[3rem] font-bold text-gray-600'>
+          Blueprint Manager
+        </h1>
+        <form
+          className='hStack items-center gap-10'
+          onSubmit={(e) => onSubmit(e)}
+        >
+          <div className='vStack gap-10'>
+            {inputSchema.map(
+              ({ name, label, options, handleOnchange, disabled }) => (
+                <InputSelect
+                  key={name}
+                  name={name}
+                  label={label}
+                  options={options}
+                  handleOnchange={handleOnchange}
+                  disabled={disabled}
+                />
+              )
+            )}
           </div>
-        </div>
+          <Button
+            type='submit'
+            text={'Open blueprint'}
+            color={'blue'}
+            disabled={!selectedFields.equipment}
+          />
+        </form>
+        <Button
+          text='Log Out'
+          color='red'
+          callBack={() => {
+            userLogOut(auth)
+            navigate('/')
+          }}
+        />
       </div>
     </section>
   )
