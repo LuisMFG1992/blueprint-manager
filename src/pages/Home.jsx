@@ -44,7 +44,8 @@ const Home = () => {
       (element) => element.value === selectedFields.substation
     )
     const { section, equipment } = selectedFields
-    console.log(substation.sections[section][equipment])
+    // console.log(substation.sections[section][equipment])
+    window.open(substation.sections[section][equipment])
   }
 
   const inputSchema = [
@@ -98,7 +99,12 @@ const Home = () => {
               )}
             </div>
             <div className='center'>
-              <Button type='submit' text={'Open blueprint'} color={'blue'} />
+              <Button
+                type='submit'
+                text={'Open blueprint'}
+                color={'blue'}
+                disabled={true}
+              />
             </div>
           </form>
           <div className='center'>
