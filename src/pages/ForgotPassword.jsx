@@ -28,8 +28,8 @@ const ForgotPassword = () => {
   }
 
   return (
-    <>
-      <div className='center relative flex h-[800px] w-[1200px] flex-col items-center gap-4 rounded-xl bg-white p-10'>
+    <section className='vStack max-w-[1000px]'>
+      <div className='hStack gap-10 rounded-xl bg-white p-5 shadow-2xl'>
         <div>
           <h2 className='text-center text-[2.8rem] font-bold text-gray-600'>
             Reset your password
@@ -76,7 +76,7 @@ const ForgotPassword = () => {
           </Link>
         </p>
       </div>
-    </>
+    </section>
   )
 }
 
