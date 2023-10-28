@@ -59,21 +59,20 @@ const SingUpPage = () => {
   }
 
   return (
-    <>
-      <div className='flex shadow-2xl'>
-        <div className='relative h-[800px] w-[600px] flex-col rounded-s-xl bg-white p-10'>
-          <h1 className='pb-4 pt-16 text-center text-[3rem] font-bold text-gray-600'>
+    <section className='vStack max-w-[1000px]'>
+      <div className='hStack gap-10 rounded-xl bg-white p-5 shadow-2xl md:h-[75vh] md:min-w-[50%] md:gap-0 md:rounded-none md:rounded-s-xl'>
+        <div className='hStack gap-2'>
+          <h1 className='text-center text-[2rem] font-bold text-gray-600 lg:text-[2.3rem]'>
             Blueprint Manager
           </h1>
-          <p className='mb-24 text-center text-[1.3rem] text-gray-500'>
+          <p className='] text-center text-[15px] text-gray-500 lg:text-[1.2rem]'>
             Access your information, anytime, anywhere.
           </p>
+        </div>
 
-          <form
-            className='flex w-full flex-col gap-4'
-            onSubmit={(e) => signUp(e)}
-          >
-            <div className='flex flex-col gap-4'>
+        <div className='hStack h-full justify-center'>
+          <form className='hStack gap-10' onSubmit={(e) => signUp(e)}>
+            <div className='hStack gap-4'>
               {inputScheme.map((input) => {
                 const { name, label, placeholder, inputType, icon } = input
                 return (
@@ -90,18 +89,22 @@ const SingUpPage = () => {
                 )
               })}
             </div>
-
-            <Button
-              text='Create account'
-              color='green'
-              type='submit'
-              callBack={signUp}
-            />
+            <div className='flex justify-center'>
+              <Button
+                text='Create account'
+                color='green'
+                type='submit'
+                callBack={signUp}
+              />
+            </div>
             <p>
               Already have an account?{' '}
               <Link to={'/'} className='font-semibold text-blue-600'>
                 Log in here.
               </Link>
+            </p>
+            <p className='bottom-2 left-4 text-gray-500'>
+              Created by Luis Flores.
             </p>
           </form>
           {error && (
@@ -109,15 +112,12 @@ const SingUpPage = () => {
               {error}
             </div>
           )}
-          <p className='absolute bottom-2 left-4 text-gray-500'>
-            Created by Luis Flores.
-          </p>
-        </div>
-        <div className='relative h-[800px] w-[600px] overflow-hidden rounded-e-xl'>
-          <img src={substation} className='h-full w-full object-cover' alt='' />
         </div>
       </div>
-    </>
+      <div className='hidden overflow-hidden rounded-e-xl md:block md:h-[75vh] md:min-w-[50%] md:rounded-none md:rounded-e-xl'>
+        <img src={substation} className='h-full w-full object-cover' alt='' />
+      </div>
+    </section>
   )
 }
 

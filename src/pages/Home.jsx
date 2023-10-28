@@ -5,6 +5,7 @@ import { authContext } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import InputSelect from '../components/InputSelect'
 import useSubstations from '../hooks/useSubstations'
+import useResize from '../hooks/useResize'
 
 const Home = () => {
   const { userLogOut } = useContext(authContext)
@@ -77,7 +78,7 @@ const Home = () => {
 
   return (
     <section>
-      <div className='hStack h-[800px] w-[1200px] items-center gap-10 rounded-xl bg-white p-10 shadow-2xl'>
+      <div className='hStack h-[80vh] w-[1200px] items-center gap-10 rounded-xl bg-white p-10 shadow-2xl'>
         <h1 className='text-center text-[3rem] font-bold text-gray-600'>
           Blueprint Manager
         </h1>

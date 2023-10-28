@@ -25,26 +25,26 @@ const Input = ({
   handleInputOnchange
 }) => {
   return (
-    <div>
+    <>
       <label
         htmlFor={name}
-        className='mb-2 block text-start text-lg font-semibold text-gray-500'
+        className='text-md mb-2 block text-start font-semibold text-gray-500'
       >
         {label}
       </label>
-      <div className='relative'>
+      <div className='relative '>
         {icons[icon]}
         <input
           type={inputType}
           name={name}
           value={state}
           id={name}
-          className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-3.5 pl-12 text-lg text-gray-900 focus:border-blue-500 focus:ring-blue-500'
+          className='text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-3.5 pl-12 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
           placeholder={placeholder}
           onChange={(e) => handleInputOnchange(e)}
         />
       </div>
-    </div>
+    </>
   )
 }
 
