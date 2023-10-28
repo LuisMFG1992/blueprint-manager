@@ -3,8 +3,8 @@ import './App.css'
 import { Route, Routes } from 'react-router-dom'
 
 import { ErrorPage, ForgotPassword, Home, LogInPage, SingUpPage } from './pages'
-import PrivateRoute from './router/protectedRoutes/PrivateRoute'
-import PublicRoute from './router/protectedRoutes/PublicRoute'
+import PrivateRoute from './router/PrivateRoute'
+import PublicRoute from './router/PublicRoute'
 import ContainerCenter from './components/ContainerCenter'
 
 function App() {
