@@ -14,15 +14,17 @@ import { HOME_URL } from '../constants'
 export const authContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const unsubscribe = () =>
-      onAuthStateChanged(auth, (currentUser) => {
-        console.log(currentUser)
-        localStorage.setItem('user', JSON.stringify(currentUser))
-        setUser(currentUser)
-      })
+    const unsubscribe = () => setIsLoading(true)
+
+    onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser)
+      setUser(currentUser)
+      setIsLoading(false)
+    })
 
     unsubscribe()
   }, [])
@@ -64,7 +66,8 @@ export const AuthContextProvider = ({ children }) => {
         resetPassword,
         sendEmailVerification,
         user,
-        setUser
+        setUser,
+        isLoading
       }}
     >
       {children}
