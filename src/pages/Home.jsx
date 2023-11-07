@@ -5,6 +5,7 @@ import { authContext } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import InputSelect from '../components/InputSelect'
 import useSubstations from '../hooks/useSubstations'
+import Loader from '../components/Loader'
 
 const Home = () => {
   const { userLogOut } = useContext(authContext)
@@ -80,49 +81,53 @@ const Home = () => {
   }
 
   return (
-    <section className='vStack max-w-[1000px]'>
-      <div className='hStack gap-10 rounded-xl bg-white p-5 shadow-2xl'>
-        <h1 className='text-center text-[3rem] font-bold text-gray-600'>
-          Blueprint Manager
-        </h1>
-        <div className='hStack items-center gap-4'>
-          <form
-            className='hStack items-center gap-10'
-            onSubmit={(e) => onSubmit(e)}
-          >
-            <div className='vStack gap-10'>
-              {inputSchema.map(
-                ({ name, label, state, options, handleOnchange, disabled }) => (
-                  <InputSelect
-                    key={name}
-                    name={name}
-                    state={state}
-                    label={label}
-                    options={options}
-                    handleOnchange={handleOnchange}
-                    disabled={disabled}
-                  />
-                )
-              )}
+    <>
+      {data.length === 0 ? (
+        <Loader />
+      ) : (
+        <section className='vStack max-w-[1200px]'>
+          <div className='hStack gap-10 rounded-xl bg-white p-5 shadow-2xl'>
+            <h1 className='text-center text-[1.7rem] font-bold text-gray-600 sm:text-[2rem]'>
+              Blueprint Manager
+            </h1>
+            <div className='hStack items-center gap-4'>
+              <form
+                className='hStack items-center gap-10'
+                onSubmit={(e) => onSubmit(e)}
+              >
+                <div className='flex flex-col gap-10 md:flex-row md:flex-wrap md:justify-center'>
+                  {inputSchema.map(
+                    ({ name, label, options, handleOnchange }) => (
+                      <InputSelect
+                        key={name}
+                        name={name}
+                        label={label}
+                        options={options}
+                        handleOnchange={handleOnchange}
+                      />
+                    )
+                  )}
+                </div>
+                <Button
+                  type='submit'
+                  text={'Open blueprint'}
+                  color={'blue'}
+                  disabled={!allInputsSelected(selectedFields)}
+                />
+              </form>
+              <Button
+                text='Log Out'
+                color='red'
+                callBack={() => {
+                  userLogOut(auth)
+                  navigate('/')
+                }}
+              />
             </div>
-            <Button
-              type='submit'
-              text={'Open blueprint'}
-              color={'blue'}
-              disabled={!allInputsSelected(selectedFields)}
-            />
-          </form>
-          <Button
-            text='Log Out'
-            color='red'
-            callBack={() => {
-              userLogOut(auth)
-              navigate('/')
-            }}
-          />
-        </div>
-      </div>
-    </section>
+          </div>
+        </section>
+      )}
+    </>
   )
 }
 

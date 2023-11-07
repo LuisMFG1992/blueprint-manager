@@ -4,10 +4,11 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 const PrivateRoute = () => {
   const { user } = useContext(authContext)
-  if (!user) {
-    return <Navigate to='/' replace />
-  } else {
+
+  if (user) {
     return <Outlet />
+  } else {
+    return <Navigate to='/' replace />
   }
 }
 
