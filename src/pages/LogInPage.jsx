@@ -49,11 +49,7 @@ const LogInPage = ({ setIsLoggedIn }) => {
     e.preventDefault()
     const { email, password } = inputsValues
     try {
-      const res = await userLogIn(email, password)
-      if (!res) {
-        console.log('TRY ERROR')
-        return
-      }
+      await userLogIn(email, password)
 
       SetInputsValues({
         email: '',
@@ -67,16 +63,12 @@ const LogInPage = ({ setIsLoggedIn }) => {
   }
 
   const logInWithGoogle = async () => {
-    const res = await userLogInWithGoogle()
     try {
-      if (!res.ok) console.log('ERROR!!!')
+      await userLogInWithGoogle()
       setIsUserAuth(true)
       navigate('/home')
     } catch (error) {
-      const errorMessage = error.message.split(' ').slice(1).join(' ')
-      setError((prev) => {
-        return { ...prev, error: true, message: errorMessage }
-      })
+      setError(error.message)
     }
   }
 

@@ -4,10 +4,10 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 const PublicRoute = () => {
   const { user } = useContext(authContext)
-  if (!user) {
-    return <Outlet />
-  } else {
+  if (user) {
     return <Navigate to='/home' replace />
+  } else {
+    return <Outlet />
   }
 }
 

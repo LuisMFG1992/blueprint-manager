@@ -10,23 +10,25 @@ import {
   signOut
 } from 'firebase/auth'
 import { HOME_URL } from '../constants'
+import Loader from '../components/Loader'
 
 export const authContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isPending, setIsPending] = useState(true)
 
   useEffect(() => {
-    const unsubscribe = () => setIsLoading(true)
-
-    onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser)
-      setUser(currentUser)
-      setIsLoading(false)
-    })
+    const unsubscribe = () =>
+      onAuthStateChanged(auth, (currentUser) => {
+        console.log(currentUser)
+        setUser(currentUser)
+        setIsPending(false)
+      })
 
     unsubscribe()
+
+    return () => unsubscribe()
   }, [])
 
   const userCreate = (email, password) => {
@@ -56,6 +58,14 @@ export const AuthContextProvider = ({ children }) => {
     })
   }
 
+  if (isPending) {
+    return (
+      <div className='center h-[100vh] w-full'>
+        <Loader />
+      </div>
+    )
+  }
+
   return (
     <authContext.Provider
       value={{
@@ -67,7 +77,7 @@ export const AuthContextProvider = ({ children }) => {
         sendEmailVerification,
         user,
         setUser,
-        isLoading
+        isPending
       }}
     >
       {children}
